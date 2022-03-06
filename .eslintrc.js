@@ -10,5 +10,11 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: [],
-  rules: {},
+  rules: {
+    'no-new': 0,
+    'class-methods-use-this': 0,
+    'lines-between-class-members': 0,
+    'import/prefer-default-export': 0,
+    'arrow-body-style': 0,
+  },
 };
