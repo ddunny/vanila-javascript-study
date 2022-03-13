@@ -13,12 +13,10 @@
         list-item-2="Third item on the list"
         list-item-3="Fourth item on the list"
         list-item-4="Fifth item on the list"
-        listItem="This will not appear"
-        add-item-text="Add new list item:"
       >
       </editable-list>
-      <editable-list title="DOING" listItem="This will not appear" add-item-text="Add new list item:"> </editable-list>
-      <editable-list title="DONE" listItem="This will not appear" add-item-text="Add new list item:"> </editable-list>
+      <editable-list title="DOING"> </editable-list>
+      <editable-list title="DONE"> </editable-list>
     </div>
 
     <script>
@@ -38,7 +36,6 @@
 
             // getter로부터 값들을 가져온다.
             const title = this.title;
-            const addItemText = this.addItemText;
             const listItems = this.items;
 
             editableListContainer.classList.add('editable-list');
@@ -129,10 +126,6 @@
 
           get title() {
             return this.getAttribute('title') || '';
-          }
-
-          get addItemText() {
-            return this.getAttribute('add-item-text') || '';
           }
 
           // item 불러온기
