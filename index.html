@@ -2,9 +2,161 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>TODO List</title>
+    <title>TODO 리스트</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div class="wrapper" style="display: flex">
+      <editable-list
+        title="TODO"
+        list-item-0="First item on the list"
+        list-item-1="Second item on the list"
+        list-item-2="Third item on the list"
+        list-item-3="Fourth item on the list"
+        list-item-4="Fifth item on the list"
+      >
+      </editable-list>
+      <editable-list title="DOING"> </editable-list>
+      <editable-list title="DONE"> </editable-list>
+    </div>
+
+    <script>
+      'use strict';
+
+      (function () {
+        class EditableList extends HTMLElement {
+          constructor() {
+            // 항상 super를 생성자에서 먼저 호출한다.
+            super();
+
+            // shadow root를 생성한다.
+            const shadow = this.attachShadow({ mode: 'open' }); // 'this.shadowRoot'를 설정하고 반환한다.
+
+            // editable-list component를 만들기 위해 컴포넌트를 생성한다.
+            const editableListContainer = document.createElement('div');
+
+            // getter로부터 값들을 가져온다.
+            const title = this.title;
+            const listItems = this.items;
+
+            editableListContainer.classList.add('editable-list');
+
+            // shadow dom에 적용할 몇 가지 css 생성
+            const style = document.createElement('style');
+            style.textContent = `li, div > div {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+            }
+
+            .icon {
+              background-color: #fff;
+              border: none;
+              cursor: pointer;
+              float: right;
+              font-size: 1.8rem;
+            }
+
+            .add-new-list {
+              margin-left: 40px;
+            }`;
+
+            //editable list 요소를 inner HTML로 만든다.
+            editableListContainer.innerHTML = `
+            <h3>${title}</h3>
+
+            <div class="add-new-list">
+              <input class="add-new-list-item-input" type="text" placeholder="${title} 추가하기"></input>
+              <button class="editable-list-add-item icon">&oplus;</button>
+            </div>
+            <ul class="item-list">
+              ${listItems
+                .map(
+                  (item) => `
+                <li>${item}
+                  <button class="editable-list-remove-item icon">&ominus;</button>
+                </li>
+              `
+                )
+                .join('')}
+            </ul>
+            `;
+
+            // 이벤트 바인딩
+            this.addListItem = this.addListItem.bind(this);
+            this.handleRemoveItemListeners = this.handleRemoveItemListeners.bind(this);
+            this.removeListItem = this.removeListItem.bind(this);
+
+            // // 생성된 요소들을 shadow DOM에 부착
+            this.shadowRoot.append(style, editableListContainer);
+          }
+
+          // list에 item 추가하기
+          addListItem(e) {
+            const textInput = this.shadowRoot.querySelector('.add-new-list-item-input');
+
+            if (textInput.value) {
+              const li = document.createElement('li');
+              const button = document.createElement('button');
+              const childrenLength = this.itemList.children.length;
+
+              li.textContent = textInput.value;
+              button.classList.add('editable-list-remove-item', 'icon');
+              button.innerHTML = '&ominus;';
+
+              this.itemList.appendChild(li);
+              this.itemList.children[childrenLength].appendChild(button);
+
+              this.handleRemoveItemListeners([button]);
+
+              textInput.value = '';
+            }
+          }
+
+          // 생명주기 콜백 중 하나.
+          // connectedCallback: 요소가 DOM에 추가될 때마다 실
+          connectedCallback() {
+            const removeElementButtons = [...this.shadowRoot.querySelectorAll('.editable-list-remove-item')];
+            const addElementButton = this.shadowRoot.querySelector('.editable-list-add-item');
+
+            this.itemList = this.shadowRoot.querySelector('.item-list');
+
+            this.handleRemoveItemListeners(removeElementButtons);
+            addElementButton.addEventListener('click', this.addListItem, false);
+          }
+
+          get title() {
+            return this.getAttribute('title') || '';
+          }
+
+          // item 불러온기
+          get items() {
+            const items = [];
+
+            [...this.attributes].forEach((attr) => {
+              if (attr.name.includes('list-item')) {
+                // attribute에 list-item 단어가 포함된 요소들을 items 값에 넣어줌
+                items.push(attr.value);
+              }
+            });
+
+            return items;
+          }
+
+          handleRemoveItemListeners(arrayOfElements) {
+            arrayOfElements.forEach((element) => {
+              element.addEventListener('click', this.removeListItem, false);
+            });
+          }
+
+          removeListItem(e) {
+            e.target.parentNode.remove();
+          }
+        }
+
+        // customElement로 등록
+        window.customElements.define('editable-list', EditableList);
+      })();
+    </script>
+    <!-- <div id="app"></div> -->
   </body>
 </html>
