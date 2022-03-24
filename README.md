@@ -1,22 +1,31 @@
 # TODO list
 
-- 리스트 종류 : to do, doing, done (라벨이라고 부름)
+## 1차 개발
 
-1. 입력
-   1. (기본) 텍스트
-   2. 각 리스트 내에서 입력이 가능한 상태를 할지(각 리스트 상단에 + 버튼) **OR** 입력 폼을 따로 둘지 (버튼을 눌러서 모달로 뜬다던지)
-2. 수정
-   1. 텍스트
-   2. 라벨 변경 (=상태 변경)
-3. 삭제
+```markdown
+# 요구조건
 
-<aside>
-💡 기본 기능을 적은 것이며, 추가적으로 본인이 더 해보고 싶은 것들 (백엔드, 테스트코드 등)은 더 녹여보기 !
-본인의 포트폴리오를 만드는 과정이다 생각!! 본인에게 도움이 되는 것으로 !
+1. 입력, 수정 구현하기
+3. 리스트 종류: to do, doing, done
+```
 
-일단은 일주일동안 진행을 해보고, 만나서 진도확인 + 어떤식으로 진행할지 다시 잡기
+### setting
+설치를 참고한 곳: [Vanilla JS 프로젝트 세팅하기](https://yujo11.github.io/javascript/Vanilla%20JS%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%84%B8%ED%8C%85%ED%95%98%EA%B8%B0/)
 
-백엔드 개발 등은 자유에 맡기고, 이후에 공유해서 같이 사용가능하다면 공유해주기!
-REST API 사용으로 ;)
+**Dependencies**
+- yarn
 
-</aside>
+**devDependencies** (배포할 때 필요한 패키지 X, 개발할 때 필요한 패키지 O)
+- eslint
+- prettier
+- webpack
+- webpack-cli: 터미널에서 명령어로 실행하기 위해 설치
+- webpack-dev-server
+- babel-loader: 자바스크립트 파일을 바벨과 웹팩을 사용해서 트랜스파일링해줌
+- css-loader: @import, url()을 import/require() 과 같은 것을 해석해줌
+- mini-css-extract-plugin: CSS를 개별 파일로 추출함. CSS를 포함하는 JS 파일별로 CSS 파일이 생성됨
+- html-webpack-plugin: 웹 팩 번들을 처리하는 HTML 파일을 쉽게 만들 수 있음
+- @babel/core
+- @babel/eslint-parser
+- @babel/preset-env
+-
