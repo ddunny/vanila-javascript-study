@@ -30,10 +30,8 @@
 
             // shadow root를 생성한다.
             const shadow = this.attachShadow({ mode: 'open' }); // 'this.shadowRoot'를 설정하고 반환한다.
-
             // editable-list component를 만들기 위해 컴포넌트를 생성한다.
             const editableListContainer = document.createElement('div');
-
             // getter로부터 값들을 가져온다.
             const title = this.title;
             const listItems = this.items;
@@ -65,7 +63,7 @@
             <h3>${title}</h3>
 
             <div class="add-new-list">
-              <input class="add-new-list-item-input" type="text" placeholder="${title} 추가하기"></input>
+              <input class="add-new-list-item-input" type="text" placeholder="${title} 추가하기" />
               <button class="editable-list-add-item icon">&oplus;</button>
             </div>
             <ul class="item-list">

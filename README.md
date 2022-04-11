@@ -28,4 +28,28 @@
 - @babel/core
 - @babel/eslint-parser
 - @babel/preset-env
--
+
+### Process
+실행을 위해 webpack dev server를 사용합니다.
+```json
+{
+  "scripts": {
+    "prod": "webpack serve --mode=production", // ***
+    "dev": "webpack serve --mode=development", // ***
+    "build": "webpack --mode=production"
+  }
+}
+```
+
+## index.html
+
+### attachShadow()  [MDN](https://developer.mozilla.org/ko/docs/Web/Web_Components/Using_shadow_DOM)
+Shadow Root 생성
+- Shadow Root 아래에 생성된 Element 들은 기존의 DOM 영역과 별개로 관리된다.
+- Element.attachShadow() 는 매개변수로 하나의 옵션을 포함하는 옵션 객체를 가진다.
+   - mode
+      - open: 메인 페이지 맥락에서 작성된 Javascript를 사용하여 Shadow DOM에 접근할 수 있음
+          ```
+          let myShadowDom = myCustomElem.shadowRoot; // 이 코드로 접근 가능
+          ```
+      - close: 외부로부터 Shadow DOM에 접근할 수 없음
